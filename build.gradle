@@ -1,0 +1,13 @@
+allprojects {
+
+  apply plugin: 'groovy'
+
+  repositories {
+    mavenCentral()
+  }
+
+  buildDir = rootProject.file("build/${project.name}")
+  
+  group = 'io.ehdev.dash'
+  version = '0.0.1'
+}
