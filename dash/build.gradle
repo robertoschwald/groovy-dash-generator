@@ -4,8 +4,11 @@ apply plugin: 'groovy'
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.3'
-    compile 'org.xerial:sqlite-jdbc:3.8.10.1'
     compile 'org.codehaus.groovy:groovy-ant:2.4.3'
+    compile 'org.xerial:sqlite-jdbc:3.8.10.1'
+    compile 'org.ccil.cowan.tagsoup:tagsoup:1.2'
+    compile 'net.sf.jtidy:jtidy:r938'
+    compile 'commons-io:commons-io:2.4'
 
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
 }
