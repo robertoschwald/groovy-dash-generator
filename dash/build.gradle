@@ -1,6 +1,10 @@
+plugins {
+    id 'groovy'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.2'
+}
 
-
-apply plugin: 'groovy'
+mainClassName = 'io.ehdev.dash.MainClass'
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.3'
@@ -9,6 +13,13 @@ dependencies {
     compile 'org.ccil.cowan.tagsoup:tagsoup:1.2'
     compile 'net.sf.jtidy:jtidy:r938'
     compile 'commons-io:commons-io:2.4'
+    compile 'commons-cli:commons-cli:1.3'
+    compile 'ch.qos.logback:logback-classic:1.1.3'
+    compile 'org.fusesource.jansi:jansi:1.11'
 
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+}
+
+shadowJar {
+    mergeGroovyExtensionModules()
 }

@@ -23,6 +23,7 @@ public class DashSql {
     }
 
     public void insert(String name, ObjectType type, String path) throws SQLException {
+//        println "$name, $type, $path"
         instance.execute(String.format(insertStatement, name, type.getValue(), path));
     }
 

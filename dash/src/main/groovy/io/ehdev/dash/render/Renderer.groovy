@@ -1,21 +1,17 @@
-package io.ehdev.dash.test
+package io.ehdev.dash.render
 
-import groovy.io.FileType
-import org.codehaus.groovy.tools.groovydoc.ClasspathResourceManager
-import org.codehaus.groovy.tools.groovydoc.FileOutputTool
-import org.codehaus.groovy.tools.groovydoc.GroovyDocTool
-import org.codehaus.groovy.tools.groovydoc.LinkArgument
-import org.codehaus.groovy.tools.groovydoc.OutputTool
+import org.codehaus.groovy.tools.groovydoc.*
 
 class Renderer {
     final private List<File> sourceSets;
-    final private File dest
+    final private File htmlLocation
+
     Renderer(List<File> sourceSets, File dest) {
         this.sourceSets = sourceSets
-        this.dest = dest
+        this.htmlLocation = new File(dest, 'Contents/Resources/Documents/groovydoc')
     }
 
-    public void things() {
+    public void renderDocs() {
         def paths = sourceSets.collect { it.getAbsolutePath() }
 
         def properties = new Properties()
@@ -23,23 +19,13 @@ class Renderer {
         properties.setProperty('use', 'true')
 
         def tool = new GroovyDocTool(new ClasspathResourceManager(), paths as String[], [] as String[], [] as String[], ['rootdir/classDocName.html'] as String[], getLinkArguments(), properties)
-        def files = []
-        for(File file: sourceSets) {
-            def path = file.absolutePath
-            if(file.isDirectory() && !path.endsWith('/')) {
-                path += '/'
-            }
-            file.eachFileRecurse(FileType.FILES) {
-                if(!it.absolutePath.contains('/internal/')) {
-                    files << it.absolutePath - path
-                }
-            }
-        }
+
+        def files = FindFilesToRender.findFilesToProcess(sourceSets)
 
         tool.add(files)
         OutputTool outputTool = new FileOutputTool()
-        tool.renderToOutput(outputTool, dest.getAbsolutePath())
-        new File(dest, 'stylesheet.css').text = getClass().getResource('/rootdir/stylesheet.css').text
+        tool.renderToOutput(outputTool, htmlLocation.getAbsolutePath())
+        new File(htmlLocation, 'stylesheet.css').text = getClass().getResource('/rootdir/stylesheet.css').text
     }
 
     List<LinkArgument> getLinkArguments() {

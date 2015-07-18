@@ -1,10 +1,11 @@
-package io.ehdev.dash
+package io.ehdev.dash.render
 
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
 
-class DashDocsetCreatorTest extends Specification {
+class RendererTest extends Specification {
+
     @Rule
     TemporaryFolder temporaryFolder
 
@@ -13,14 +14,12 @@ class DashDocsetCreatorTest extends Specification {
         temporaryFolder.create()
     }
 
-    def 'something else'() {
+    def 'test rendering'() {
         setup:
-        def destination = temporaryFolder.newFolder()
-
-        def dashCreator = new DashDocsetCreator([new File('src/main/groovy')], destination)
+        def ren = new Renderer([new File('src/main/groovy')], temporaryFolder.newFolder())
 
         when:
-        dashCreator.createDashDocset()
+        ren.renderDocs()
 
         then:
         noExceptionThrown()

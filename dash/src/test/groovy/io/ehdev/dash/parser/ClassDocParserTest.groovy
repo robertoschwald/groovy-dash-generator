@@ -1,10 +1,12 @@
-package io.ehdev.dash
+package io.ehdev.dash.parser
 
+import io.ehdev.dash.sql.DashSql
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
 
-class DashDocsetCreatorTest extends Specification {
+class ClassDocParserTest extends Specification {
+
     @Rule
     TemporaryFolder temporaryFolder
 
@@ -13,14 +15,14 @@ class DashDocsetCreatorTest extends Specification {
         temporaryFolder.create()
     }
 
-    def 'something else'() {
+    def 'foo'() {
         setup:
-        def destination = temporaryFolder.newFolder()
-
-        def dashCreator = new DashDocsetCreator([new File('src/main/groovy')], destination)
+        def folder = temporaryFolder.newFolder()
+        def sql = new DashSql(folder)
+        def parser = new ClassDocParser([new File('src/main/groovy')], sql)
 
         when:
-        dashCreator.createDashDocset()
+        parser.parseDocs()
 
         then:
         noExceptionThrown()

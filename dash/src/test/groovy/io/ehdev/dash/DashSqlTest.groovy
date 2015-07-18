@@ -1,22 +1,29 @@
 package io.ehdev.dash
 
 import io.ehdev.dash.sql.DashSql
+import org.junit.Rule
+import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
 
 class DashSqlTest extends Specification {
 
+    @Rule
+    TemporaryFolder temporaryFolder
+
+    def setup() {
+        temporaryFolder = new TemporaryFolder()
+        temporaryFolder.create()
+    }
+
     def 'create searchItems'() {
         setup:
-        def file = new File('/Volumes/Workspace/gradle/subprojects/docs/build/docs/gradle.docset')
-        def sql = new DashSql(file)
+        def sql = new DashSql(temporaryFolder.newFolder())
+        sql.insert('foo', ObjectType.INTERFACE, 'foo')
 
         when:
         def items = sql.getSearchItems()
 
         then:
         items.size() > 0
-        items.each {
-            println it
-        }
     }
 }

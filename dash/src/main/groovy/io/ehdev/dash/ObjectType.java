@@ -7,6 +7,7 @@ public enum ObjectType {
     CONSTRUCTOR("Constructor"),
     FIELD("Field"),
     ANNOTATION("Annotation"),
+    PROPERTY("Property"),
     METHOD("Method");
 
     private final String value;
