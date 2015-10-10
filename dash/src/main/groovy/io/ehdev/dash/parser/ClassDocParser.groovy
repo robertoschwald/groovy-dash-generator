@@ -28,9 +28,12 @@ class ClassDocParser {
             }
             def filename = 'groovydoc/' + groovyClassDoc.getFullPathName() + '.html'
 
+            forDocClass(groovyClassDoc, ObjectType.CLASS, filename)
+
             forEachMember(groovyClassDoc.fields(), ObjectType.FIELD, filename)
             forEachMember(groovyClassDoc.enumConstants(), ObjectType.ENUM, filename)
             forEachMember(groovyClassDoc.properties(), ObjectType.PROPERTY, filename)
+            forEachAnnotation(groovyClassDoc.annotations(), ObjectType.ANNOTATION, filename)
 
             forEachExecutable(groovyClassDoc.methods(), ObjectType.METHOD, filename)
             forEachExecutable(groovyClassDoc.constructors(), ObjectType.CONSTRUCTOR, filename)
@@ -44,6 +47,17 @@ class ClassDocParser {
                 dashSql.insert(name, property, "${filename}#${name}")
             }
         }
+    }
+
+    private void forEachAnnotation(GroovyAnnotationRef[] annotations, ObjectType property, String filename) {
+        for(GroovyAnnotationRef annotationRef: annotations) {
+            dashSql.insert(annotationRef.name(), property, "${filename}#${annotationRef.name()}" )
+        }
+    }
+
+    private void forDocClass(GroovyClassDoc doc, ObjectType property, String filename) {
+        dashSql.insert(doc.name(), property, "${filename}")
+
     }
 
     private void forEachMember(GroovyMemberDoc[] members, ObjectType property, String filename) {
