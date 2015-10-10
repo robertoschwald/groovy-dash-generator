@@ -4,6 +4,8 @@ import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
 
+import javax.imageio.stream.ImageInputStream
+
 class DashDocsetCreatorTest extends Specification {
     @Rule
     TemporaryFolder temporaryFolder
@@ -20,7 +22,7 @@ class DashDocsetCreatorTest extends Specification {
         def dashCreator = new DashDocsetCreator([new File('src/main/groovy')], destination)
 
         when:
-        dashCreator.createDashDocset()
+        dashCreator.createDashDocset(null,"")
 
         then:
         noExceptionThrown()
