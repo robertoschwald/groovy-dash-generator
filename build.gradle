@@ -19,5 +19,6 @@ allprojects {
   buildDir = rootProject.file("build/${project.name}")
   
   group = 'io.ehdev.dash'
-  version = '0.0.1'
+  version = '0.0.2-SNAPSHOT'
+
 }
