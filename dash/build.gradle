@@ -4,6 +4,8 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '1.2.2'
 }
 
+apply plugin:'maven'
+
 mainClassName = 'io.ehdev.dash.MainClass'
 
 dependencies {
@@ -22,4 +24,21 @@ dependencies {
 
 shadowJar {
     mergeGroovyExtensionModules()
+}
+
+
+uploadShadow {
+    dependsOn test
+    // set in ~/.gradle/gradle.properties
+    assert repoUser && repoPassword && repoUrl
+    def isSnapshot = version ==~ /.*SNAPSHOT.*/
+    def repo = isSnapshot ? "${repoUrl}/libs-snapshots-local" : "${repoUrl}/libs-releases-local"
+    repositories {
+        mavenDeployer {
+            configuration = configurations.deployerJars
+            repository(url:repo) {
+                authentication(userName:repoUser, password:repoPassword)
+            }
+        }
+    }
 }

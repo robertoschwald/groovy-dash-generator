@@ -1,9 +1,19 @@
 allprojects {
 
-  apply plugin: 'groovy'
+  apply plugin:'groovy'
+
+
+  configurations {
+    deployerJars
+  }
 
   repositories {
     mavenCentral()
+  }
+
+  dependencies {
+    // deployerJars "org.apache.maven.wagon:wagon-ssh:2.2"
+    deployerJars "org.apache.maven.wagon:wagon-http:2.2"
   }
 
   buildDir = rootProject.file("build/${project.name}")
