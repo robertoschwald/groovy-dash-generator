@@ -2,9 +2,26 @@
 
 This project allows for you to generate documentation from project source. This project uses a modified groovydoc page to remove the navigation and keep the 'look and feel' the same across pages.
 
-To build the tool, you will need to run `./gradlew shadowJar`. Once that runs, would execute the jar that get generated. A simple example is `java -jar build/dash/libs/dash-0.0.1-all.jar --output-dir build/generated-docs --name foo dash/src/main/java`
+To build the tool, you will need to run `./gradlew shadowJar`. 
 
-Running this will generate a file `build/generated-docs/foo.docset`, you can simply add this to Dash. A more complicated used to generate the gradle docset is 
+## Usage
+
+    java -jar dash-<version>-all.jar <options> <src-directories>
+    
+### Options
+
+* --output-dir \<dir\>   : Directory to create the docset in
+* --name \<name\>        : Name of the docset
+* --index \<index\>      : Index to start with
+* src-directories        : Directories to search for source files
+
+Simple example:
+
+    java -jar build/dash/libs/dash-0.0.1-all.jar --output-dir build/generated-docs --name foo dash/src/main/java`
+
+Running this will generate a file `build/generated-docs/foo.docset`, you can simply add this to Dash. 
+
+Detailed example:
 
     java -jar build/dash/libs/dash-0.0.1-all.jar --output-dir build/generated-docs/gradle3 --name gradle  --index ~/Downloads/gradle-2.5/docs/dsl  `find ~/Downloads/gradle-2.5/src -type d -maxdepth 1 -mindepth 1 -exec echo -n "{} " \;`
 
